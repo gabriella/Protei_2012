@@ -1,7 +1,8 @@
 /* Arduino/Xbee RC Control
-   Gabriella Levine and Logan Williams
+   Gabriella Levine 
    Protei
-   6/29/2011
+   2012
+   hamming(7,4) based on Logan's code Protei_006 2011
 */
 
 // system constants

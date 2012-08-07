@@ -1,8 +1,8 @@
-/* Arduino/Xbee RC Control
+/* Arduino/Xbee RC Control TX
    Gabriella Levine 
    Protei
-   2012
-   hamming(7,4) based on Logan's code Protei_006 2011
+2012
+hamming(7,4) code by logan williams
 */
 
 // system constants
@@ -56,7 +56,7 @@ void sendBytes(char byte1, char byte2) {
 }
 
 // converts a 4 bit halfbyte to its 8 bit hamming encoded version
-// I know, it's a lookup table. whatever, I'll fix it if I have to
+//lookup table
 char hamming74Encode(char halfByte) {
   halfByte = halfByte & B00001111;
   

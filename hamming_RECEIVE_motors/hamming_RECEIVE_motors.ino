@@ -1,22 +1,19 @@
-/* Arduino / xbee RC Control (Reciever)
-   Gabriella Levine
-   Protei
-   7/30/2012
+/* Arduino/Xbee RC Control (Reciever)
+Gabriella Levine
+Protei
+   6/30/2012
    
    This sketch reads serial data from the Xbee, and decodes it using
-   Hamming(7,4) encoding (based on Logan Williams code from Protei 2011). It will correct any single bit error, and
+   Hamming(7,4) encoding, based on Logan Williams code Protei_006 2011. It will correct any single bit error, and
    throw away any multiple bit errors.
  */
 
 // the two output pins
 const int OUTPUT_1 = 3;
 const int OUTPUT_2 = 5;
-//two dir pins
+
 const int DIR_1 = 4;
 const int DIR_2 = 6;
-
-const int RESET_1 = 7;
-const int RESET_2 = 8;
 
 boolean debug = false;
 
@@ -25,7 +22,6 @@ void setup() {
   pinMode(OUTPUT_2, OUTPUT);
   pinMode(DIR_1, OUTPUT);
   pinMode(DIR_2, OUTPUT);
-  
   Serial.begin(9600);
  // SerialUSB.begin();
 }
@@ -34,44 +30,34 @@ void loop() {
   char data1;
   char data2;
   
-
-  
   if (receive(&data1, &data2)) {
-digitalWrite(DIR_1, HIGH);
-     // digitalWrite(RESET_1, HIGH);
-      analogWrite(OUTPUT_1, map(data1,0,255, 255,0));
+    //if(data1<=120){
+      //set dir pin
+      int data_1 = int(data1);
+         if(data_1<=120){
+analogWrite(DIR_1, 0);
+      analogWrite(OUTPUT_1, -2*data_1);
+      //if previous state was higher than this then you need to switch the DIR low
+      //for a second (250 ms) the restart it
     }
-    }
-
-    /*
-     if(data1>130)
+    else 
     {
       //if previous state was higher than this then you need to switch the enable off
       //for a second (250 ms) the restart it
-      digitalWrite(13, HIGH);
-      //digitalWrite(RESET_1,HIGH);
+    analogWrite(DIR_1,0);
       //switch dir pin
-       digitalWrite(DIR_1, LOW);
-      int outputRev = map(data1, 130, 255, 0, 255);
-      analogWrite(OUTPUT_1, outputRev);
-     
+      analogWrite(OUTPUT_1, 2*(data_1-120));
     }
-    */
-   /* else if(data1>119&&data1<131){
-    
+     if(data1>100&&data1<150){
      //map this so that it goes down from center and up from center but from 120 to 130 it remains at center
     //else data1=125... try it?
    //set enable pin off
-   digitalWrite(13,LOW);
-  // digitalWrite(RESET_1, LOW);
-     analogWrite(OUTPUT_1, 0);
-          //delay(250);
-
-     // digitalWrite(OUTPUT_1, LOW);
+   digitalWrite(OUTPUT_1, LOW);
    //if data is below a certain value, o 
-    }*/
-  //}//if this doenst work try mappin
-   
+    }
+  }
+  }
+
 // this function checks for data to receive. if there is data, it reads it into
 // data1 and data2 (pointers passed from the main loop).
 // returns true if data read successfully, false otherwise
@@ -123,7 +109,6 @@ boolean receive(char *data1, char *data2) {
     return false;
   }
 }
-
 
 // This function takes a byte that has 4 data bits, 3 Hamming(7,4) parity bits and
 // one overall parity bit, in that order (LSB is the overall parity bit), and decodes

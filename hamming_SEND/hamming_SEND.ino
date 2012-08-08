@@ -27,7 +27,12 @@ void loop() {
   outputValueJSR = map(sensorValueJSR, 0, 1023, 0, 255);
   
   sendBytes(outputValueJSL, outputValueJSR); // transmit the values
-  
+//if(outputValueJSL<=120){
+//    Serial.write(1);
+//  }
+//  else if(outputValueJSL>130){
+//    Serial.write(2);
+//  }
   delay(10);
 }
   

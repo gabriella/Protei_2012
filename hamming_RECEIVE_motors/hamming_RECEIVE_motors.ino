@@ -31,6 +31,13 @@ void loop() {
   char data2;
   
   if (receive(&data1, &data2)) {
+//    if(Serial.read()==1){digitalWrite(DIR_1, HIGH);}
+//    else if(Serial.read()==2){digitalWrite(DIR_1, LOW);}
+    analogWrite(OUTPUT_1, data1);
+  }
+  
+}
+ /* 
     //if(data1<=120){
       //set dir pin
       int data_1 = int(data1);
@@ -57,7 +64,7 @@ analogWrite(DIR_1, 0);
     }
   }
   }
-
+*/
 // this function checks for data to receive. if there is data, it reads it into
 // data1 and data2 (pointers passed from the main loop).
 // returns true if data read successfully, false otherwise

@@ -30,18 +30,22 @@ void loop() {
   char data1;
   char data2;
   if (receive(&data1, &data2)) {
+  }
     
 //    if(Serial.read()==1){digitalWrite(DIR_1, HIGH);}
 //    else if(Serial.read()==2){digitalWrite(DIR_1, LOW);}
-    analogWrite(OUTPUT_1, (int) data1);
- if((int) &data1<=255){
-digitalWrite(DIR_1, HIGH); 
-digitalWrite(13, HIGH);}
- else if((int) &data1<=130){
-digitalWrite(DIR_1, LOW); 
-digitalWrite(13, LOW);
- }
-  }
+    
+//    if( ((int) data1)-128<=0){
+//    digitalWrite(DIR_1, HIGH); 
+//digitalWrite(13, HIGH);}
+//
+// else if(((int) &data1)-128>0){
+//digitalWrite(DIR_1, LOW); 
+//digitalWrite(13, LOW);
+// }
+//     analogWrite(OUTPUT_1, (int) data1);
+//
+//  }
   
 }
  /* 
@@ -109,6 +113,16 @@ boolean receive(char *data1, char *data2) {
     } else {
       *data1 = (halfByte1A & B00001111) + ((halfByte1B << 4) & B11110000);
       *data2 = (halfByte2A & B00001111) + ((halfByte2B << 4) & B11110000);
+      
+      if( (int)(*data1)-128<=0){
+       digitalWrite(13,HIGH); 
+       digitalWrite(DIR_1, HIGH);
+      }
+      else if( (int)(*data1)-128>=1){
+       digitalWrite(13,LOW); 
+       digitalWrite(DIR_2, LOW);
+      }
+      analogWrite(OUTPUT_1, *data1);
       
       if (debug) {
         Serial.print("Data1: ");   

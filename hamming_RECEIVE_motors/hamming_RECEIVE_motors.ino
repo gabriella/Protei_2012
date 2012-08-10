@@ -29,11 +29,18 @@ void setup() {
 void loop() {
   char data1;
   char data2;
-  
   if (receive(&data1, &data2)) {
+    
 //    if(Serial.read()==1){digitalWrite(DIR_1, HIGH);}
 //    else if(Serial.read()==2){digitalWrite(DIR_1, LOW);}
-    analogWrite(OUTPUT_1, data1);
+    analogWrite(OUTPUT_1, (int) data1);
+ if((int) &data1<=255){
+digitalWrite(DIR_1, HIGH); 
+digitalWrite(13, HIGH);}
+ else if((int) &data1<=130){
+digitalWrite(DIR_1, LOW); 
+digitalWrite(13, LOW);
+ }
   }
   
 }

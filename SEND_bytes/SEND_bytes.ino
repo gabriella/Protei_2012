@@ -40,6 +40,6 @@ void loop() {
  delay(10);
   Serial.write(sensorValueLEFT); 
   delay(10);
-  Serial.flush();  
+ // Serial.flush();  
 }
 

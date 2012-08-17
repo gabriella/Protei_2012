@@ -37,12 +37,14 @@ void loop() {
     } 
     else if (sensorState == 1) {
       analogWrite(OUTPUT_1, incomingDataInt);
-      if(incomingDataInt<=100){
+      if(incomingDataInt<=120){
        digitalWrite(DIR_PIN_1, LOW); 
       }
-        else if(incomingDataInt>=200){
+        else if(incomingDataInt>=150){
        digitalWrite(DIR_PIN_1, HIGH); 
+      analogWrite(OUTPUT_1,map(incomingDataInt, 150,255,0,255));
       }
+      else{digitalWrite(OUTPUT_1, LOW);}
      // Serial.println(incomingDataInt);
       sensorState = 0;
     }

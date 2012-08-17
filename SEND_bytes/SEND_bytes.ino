@@ -20,8 +20,6 @@ void setup() {
   pinMode(powerPin, OUTPUT);
   pinMode(JSTK_RIGHT, INPUT);
   pinMode(JSTK_LEFT, INPUT);
-
-
 }
 
 void loop() {

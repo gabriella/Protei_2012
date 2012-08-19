@@ -19,6 +19,8 @@ int sensorValueLEFT = 0;        // value read from the pot
 int currentMillis = 0;
 int previousMillis = 0;
 
+int signalState = LOW;
+
 long interval = 1000;
 void setup() {
   // initialize serial communications at 9600 bps:
@@ -29,17 +31,27 @@ void setup() {
 }
 
 void loop() {
+ 
   if(Serial.available()>0){
     if(Serial.read()=='1'){
-      digitalWrite(signalPin, HIGH);
-    }
-    else{
-      digitalWrite(signalPin, LOW);
+  
+     signalState = HIGH;
+     unsigned long currentMillis = millis();
+     if(currentMillis - previousMillis>interval){
+       previousMillis=currentMillis;
+       if(signalState ==HIGH)
+       signalState=LOW;
+       else
+       signalState=LOW;
+     }
+   
+      digitalWrite(signalPin, signalState);
     }
   }
-  else {
-    digitalWrite(signalPin, LOW);
-  }
+      else{digitalWrite(signalPin, LOW);}
+
+      
+ 
 
   digitalWrite(powerPin, HIGH);
   // read the analog in value:

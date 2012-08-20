@@ -1,6 +1,6 @@
 /*
 PROTEI_010
-RC-->Xbee-->xbee-->arduino-->motor
+ RC-->Xbee-->xbee-->arduino-->motor
  written by gabriella levine
  2012
  */
@@ -19,7 +19,7 @@ int sensorValueLEFT = 0;        // value read from the pot
 int currentMillis = 0;
 int previousMillis = 0;
 
-int signalState = LOW;
+int signalState = 0;
 
 long interval = 1000;
 void setup() {
@@ -31,27 +31,24 @@ void setup() {
 }
 
 void loop() {
- 
+
   if(Serial.available()>0){
     if(Serial.read()=='1'){
-  
-     signalState = HIGH;
-     unsigned long currentMillis = millis();
-     if(currentMillis - previousMillis>interval){
-       previousMillis=currentMillis;
-       if(signalState ==HIGH)
-       signalState=LOW;
-       else
-       signalState=LOW;
-     }
-   
-      digitalWrite(signalPin, signalState);
+      digitalWrite(signalPin, HIGH);
+      signalState = 1;
+    }
+    signalState = 0;
+  }
+  else if(signalState ==0){
+    unsigned long currentMillis = millis();
+    if(currentMillis - previousMillis>interval){
+      previousMillis=currentMillis;
+      digitalWrite(signalPin, LOW);
     }
   }
-      else{digitalWrite(signalPin, LOW);}
 
-      
- 
+
+
 
   digitalWrite(powerPin, HIGH);
   // read the analog in value:
@@ -70,6 +67,7 @@ void loop() {
   delay(10);
   // Serial.flush();  
 }
+
 
 
 

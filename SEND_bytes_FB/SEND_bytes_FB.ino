@@ -21,13 +21,14 @@ int previousMillis = 0;
 
 int signalState = 0;
 
-long interval = 1000;
+long interval = 200;
 void setup() {
   // initialize serial communications at 9600 bps:
   Serial.begin(9600); 
   pinMode(powerPin, OUTPUT);
   pinMode(JSTK_RIGHT, INPUT);
   pinMode(JSTK_LEFT, INPUT);
+  pinMode(signalPin, OUTPUT);
 }
 
 void loop() {
@@ -51,8 +52,10 @@ void loop() {
 
 
   digitalWrite(powerPin, HIGH);
-  // read the analog in value:
-  sensorValueRIGHT = map(analogRead(JSTK_RIGHT),0,1023,0,255);            
+  // read the analog in value and map it, 866 to 108
+  sensorValueRIGHT = map(analogRead(JSTK_RIGHT),200,860,0,255);     
+   sensorValueRIGHT= constrain(sensorValueRIGHT,0,255);
+
   Serial.print('R');
   delay(10);
   // Serial.write(outputValue9);  
@@ -60,13 +63,16 @@ void loop() {
   //Serial.write(250);
   delay(10);
   //delay(20);
-  sensorValueLEFT = map(analogRead(JSTK_LEFT),0,1023,0,255);   
+  sensorValueLEFT = map(analogRead(JSTK_LEFT),200,860,0,255);
+   sensorValueLEFT = constrain(sensorValueLEFT, 0,255);
+
   Serial.print('L');
   delay(10);
   Serial.write(sensorValueLEFT); 
   delay(10);
-  // Serial.flush();  
+  Serial.flush();  
 }
+
 
 
 

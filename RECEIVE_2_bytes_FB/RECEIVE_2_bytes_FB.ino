@@ -40,7 +40,7 @@ void loop() {
     } 
     else if (sensorState == 1) {
       analogWrite(OUTPUT_1, incomingDataInt);
-      if(incomingDataInt<=120){
+      if(incomingDataInt<=100){
         digitalWrite(DIR_PIN_1, LOW); 
         analogWrite(OUTPUT_1,map(incomingDataInt, 120,0,0,255));
       }
